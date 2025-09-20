@@ -1,0 +1,302 @@
+{% extends "base.html" %}
+
+{% block title %}About - IPC Recommender System{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-5 fw-bold mb-3">About IPC Recommender</h1>
+                <p class="lead">
+                    An AI-powered system that helps legal professionals, students, and researchers find relevant IPC sections using advanced natural language processing.
+                </p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <i class="fas fa-robot fa-5x opacity-75"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-8">
+                <!-- How It Works -->
+                <div class="mb-5">
+                    <h2 class="h3 mb-4">
+                        <i class="fas fa-cogs text-primary me-2"></i>
+                        How It Works
+                    </h2>
+                    <p class="lead text-muted mb-4">
+                        Our system leverages state-of-the-art BERT (Bidirectional Encoder Representations from Transformers)
+                        technology to understand the semantic meaning of your queries and match them with relevant IPC sections.
+                    </p>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body p-4">
+                                    <div class="text-primary mb-3">
+                                        <i class="fas fa-brain fa-2x"></i>
+                                    </div>
+                                    <h5>Natural Language Processing</h5>
+                                    <p class="text-muted mb-0">
+                                        Advanced NLP algorithms understand the context and meaning behind your legal queries,
+                                        not just keyword matching.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body p-4">
+                                    <div class="text-primary mb-3">
+                                        <i class="fas fa-vector-square fa-2x"></i>
+                                    </div>
+                                    <h5>Semantic Embeddings</h5>
+                                    <p class="text-muted mb-0">
+                                        BERT generates high-dimensional vector representations that capture the semantic
+                                        relationships between your query and IPC sections.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body p-4">
+                                    <div class="text-primary mb-3">
+                                        <i class="fas fa-chart-line fa-2x"></i>
+                                    </div>
+                                    <h5>Cosine Similarity</h5>
+                                    <p class="text-muted mb-0">
+                                        Measures the similarity between your query and each IPC section in vector space,
+                                        providing accurate relevance scores.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body p-4">
+                                    <div class="text-primary mb-3">
+                                        <i class="fas fa-sort-amount-down fa-2x"></i>
+                                    </div>
+                                    <h5>Intelligent Ranking</h5>
+                                    <p class="text-muted mb-0">
+                                        Results are ranked by relevance score, ensuring the most applicable IPC sections
+                                        appear at the top of your results.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div class="mb-5">
+                    <h2 class="h3 mb-4">
+                        <i class="fas fa-star text-primary me-2"></i>
+                        Key Features
+                    </h2>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="bg-primary bg-opacity-10 rounded-circle p-2">
+                                        <i class="fas fa-search text-primary"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="mb-2">Intelligent Search</h5>
+                                    <p class="text-muted">
+                                        Enter natural language descriptions of legal scenarios and get relevant IPC sections instantly.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="bg-success bg-opacity-10 rounded-circle p-2">
+                                        <i class="fas fa-percentage text-success"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="mb-2">Relevance Scoring</h5>
+                                    <p class="text-muted">
+                                        Each recommendation comes with a confidence score showing how well it matches your query.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="bg-info bg-opacity-10 rounded-circle p-2">
+                                        <i class="fas fa-book text-info"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="mb-2">Comprehensive Database</h5>
+                                    <p class="text-muted">
+                                        Access the complete IPC with detailed descriptions and chapter classifications.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="bg-warning bg-opacity-10 rounded-circle p-2">
+                                        <i class="fas fa-mobile-alt text-warning"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="mb-2">Responsive Design</h5>
+                                    <p class="text-muted">
+                                        Access the system from any device - desktop, tablet, or mobile phone.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Use Cases -->
+                <div class="mb-5">
+                    <h2 class="h3 mb-4">
+                        <i class="fas fa-users text-primary me-2"></i>
+                        Who Can Use This System
+                    </h2>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                    <i class="fas fa-user-tie fa-lg text-primary"></i>
+                                </div>
+                                <h5>Legal Professionals</h5>
+                                <p class="text-muted small">
+                                    Lawyers, judges, and legal advisors can quickly find relevant sections for case preparation.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                    <i class="fas fa-graduation-cap fa-lg text-success"></i>
+                                </div>
+                                <h5>Law Students</h5>
+                                <p class="text-muted small">
+                                    Students can use this tool to understand IPC sections and their applications in different scenarios.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                    <i class="fas fa-search fa-lg text-info"></i>
+                                </div>
+                                <h5>Researchers</h5>
+                                <p class="text-muted small">
+                                    Legal researchers and academics can explore correlations between different legal scenarios and IPC provisions.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="sticky-top" style="top: 2rem;">
+                    <!-- Quick Stats -->
+                    <div class="card border-0 bg-light mb-4">
+                        <div class="card-body text-center p-4">
+                            <h5 class="card-title text-primary mb-3">System Statistics</h5>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="h4 text-primary mb-1">500+</div>
+                                    <small class="text-muted">IPC Sections</small>
+                                </div>
+                                <div class="col-6">
+                                    <div class="h4 text-success mb-1">95%</div>
+                                    <small class="text-muted">Accuracy</small>
+                                </div>
+                                <div class="col-6">
+                                    <div class="h4 text-warning mb-1">BERT</div>
+                                    <small class="text-muted">AI Model</small>
+                                </div>
+                                <div class="col-6">
+                                    <div class="h4 text-info mb-1">24/7</div>
+                                    <small class="text-muted">Available</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technology Stack -->
+                    <div class="card border-0 mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">
+                                <i class="fas fa-code text-primary me-2"></i>
+                                Technology Stack
+                            </h5>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-primary">Flask</span>
+                                <span class="badge bg-success">PyTorch</span>
+                                <span class="badge bg-info">BERT</span>
+                                <span class="badge bg-warning text-dark">Transformers</span>
+                                <span class="badge bg-secondary">Scikit-learn</span>
+                                <span class="badge bg-dark">Bootstrap</span>
+                                <span class="badge bg-primary">Python</span>
+                                <span class="badge bg-success">NumPy</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Call to Action -->
+                    <div class="card bg-primary text-white border-0">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Ready to Get Started?</h5>
+                            <p class="card-text">
+                                Try our intelligent search system and discover relevant IPC sections for your legal queries.
+                            </p>
+                            <a href="{{ url_for('home') }}" class="btn btn-light">
+                                <i class="fas fa-search me-2"></i>Start Searching
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Disclaimer -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-warning mb-0" role="alert">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-shrink-0 me-3">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div>
+                            <h6 class="alert-heading mb-2">Important Disclaimer</h6>
+                            <p class="mb-0">
+                                This system is designed as a research and educational tool. While our AI provides highly accurate recommendations,
+                                it should not be considered as legal advice. Always consult with qualified legal professionals for specific legal matters.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

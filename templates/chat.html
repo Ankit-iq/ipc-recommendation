@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LegalAI Chat</title>
+  <style>
+    /* General page styling */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0d0d0d;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(90deg, #ff6600, #6a0dad);
+      padding: 15px;
+      text-align: center;
+      font-size: 1.8em;
+      font-weight: bold;
+      letter-spacing: 2px;
+      box-shadow: 0 0 15px #ff6600;
+    }
+
+    /* Chat container */
+    .chat-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    /* Chat bubbles */
+    .message {
+      max-width: 70%;
+      padding: 12px 18px;
+      border-radius: 15px;
+      font-size: 1em;
+      line-height: 1.4em;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #ff6600, #ff3399);
+      color: #fff;
+      border-bottom-right-radius: 0;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background: #1a1a1a;
+      color: #fff;
+      border-bottom-left-radius: 0;
+      border: 1px solid #6a0dad;
+    }
+
+    /* Input area */
+    .chat-input {
+      display: flex;
+      padding: 15px;
+      background: #111;
+      border-top: 2px solid #6a0dad;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 12px 15px;
+      font-size: 1em;
+      border-radius: 25px;
+      border: none;
+      outline: none;
+      background: #1a1a1a;
+      color: #fff;
+      box-shadow: inset 0 0 5px #6a0dad;
+    }
+
+    .chat-input button {
+      margin-left: 10px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #ff6600, #6a0dad);
+      color: #fff;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff6600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .chat-input button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #ff3399;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #6a0dad;
+      border-radius: 5px;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <header>⚖️ LegalAI Chat</header>
+
+  <div class="chat-container" id="chat-container">
+    <div class="message bot">Hello! 👋 I am LegalAI. How can I assist you today?</div>
+  </div>
+
+  <div class="chat-input">
+    <input type="text" id="user-input" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    function sendMessage() {
+      let input = document.getElementById("user-input");
+      let message = input.value.trim();
+      if (message === "") return;
+
+      let chatContainer = document.getElementById("chat-container");
+
+      // Add user message
+      let userMsg = document.createElement("div");
+      userMsg.classList.add("message", "user");
+      userMsg.innerText = message;
+      chatContainer.appendChild(userMsg);
+
+      // Add bot response (placeholder)
+      setTimeout(() => {
+        let botMsg = document.createElement("div");
+        botMsg.classList.add("message", "bot");
+        botMsg.innerText = "🤖 This is a sample bot response for: " + message;
+        chatContainer.appendChild(botMsg);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }, 700);
+
+      input.value = "";
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+  </script>
+</body>
+</html>

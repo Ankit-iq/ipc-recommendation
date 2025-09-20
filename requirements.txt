@@ -1,0 +1,5 @@
+Flask==3.1.2
+numpy==2.3.3
+scikit-learn==1.7.2
+sentence-transformers==5.1.0
+torch==2.8.0

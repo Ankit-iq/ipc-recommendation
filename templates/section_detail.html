@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block title %}IPC Section {{ section.Section }} - {{ section.Offense }}{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="bg-light py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-2">
+                        <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url_for('browse') }}">Browse Sections</a></li>
+                        <li class="breadcrumb-item active">Section {{ section.Section }}</li>
+                    </ol>
+                </nav>
+                <div class="d-flex align-items-center">
+                    <div class="section-badge bg-primary text-white text-center py-2 px-3 rounded me-3">
+                        <div class="small fw-bold">IPC</div>
+                        <div class="h4 mb-0">{{ section.Section }}</div>
+                    </div>
+                    <div>
+                        <h1 class="h3 mb-0">{{ section.Offense }}</h1>
+                        <p class="text-muted mb-0 mt-1">
+                            <i class="fas fa-book me-1"></i>{{ section.Chapter }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section Details -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-8">
+                <!-- Main Content -->
+                <div class="card border-0 shadow-sm mb-5">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-gavel me-2"></i>
+                            Section Details
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <h6 class="text-primary mb-3">Legal Description:</h6>
+                        <div class="bg-light p-4 rounded mb-4">
+                            <p class="mb-0 lead">{{ section.Description }}</p>
+                        </div>
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary bg-opacity-10 rounded p-2 me-3">
+                                        <i class="fas fa-hashtag text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Section Number</h6>
+                                        <p class="text-muted mb-0">{{ section.Section }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-success bg-opacity-10 rounded p-2 me-3">
+                                        <i class="fas fa-exclamation-circle text-success"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Offense Type</h6>
+                                        <p class="text-muted mb-0">{{ section.Offense }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex align-items-start">
+                                    <div class="bg-info bg-opacity-10 rounded p-2 me-3">
+                                        <i class="fas fa-book-open text-info"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Chapter</h6>
+                                        <p class="text-muted mb-0">{{ section.Chapter }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Sections -->
+                {% if related %}
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-link me-2"></i>
+                            Related Sections
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="text-muted mb-4">Other sections from the same chapter that might be relevant:</p>
+                        <div class="row g-3">
+                            {% for rel_section in related %}
+                            <div class="col-lg-12">
+                                <div class="card border-0 bg-light">
+                                    <div class="card-body p-3">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="section-badge bg-outline-secondary text-secondary text-center py-1 px-2 border rounded">
+                                                    <div class="small">IPC</div>
+                                                    <div class="fw-bold">{{ rel_section.Section }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <h6 class="mb-1">{{ rel_section.Offense }}</h6>
+                                                <p class="text-muted mb-0 small">
+                                                    {{ rel_section.Description[:100] }}{% if rel_section.Description|length > 100 %}...{% endif %}
+                                                </p>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a href="{{ url_for('section_detail', section_id=rel_section.Section) }}"
+                                                   class="btn btn-outline-primary btn-sm">
+                                                    <i class="fas fa-eye me-1"></i>View
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="sticky-top" style="top: 2rem;">
+                    <!-- Quick Actions -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-warning text-dark">
+                            <h6 class="mb-0">
+                                <i class="fas fa-tools me-2"></i>
+                                Quick Actions
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-grid gap-2">
+                                <a href="{{ url_for('browse') }}" class="btn btn-outline-primary">
+                                    <i class="fas fa-book me-2"></i>Browse All Sections
+                                </a>
+                                <a href="{{ url_for('home') }}" class="btn btn-primary">
+                                    <i class="fas fa-search me-2"></i>Search Similar Cases
+                                </a>
+                                <button class="btn btn-outline-secondary" onclick="window.print()">
+                                    <i class="fas fa-print me-2"></i>Print Section
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section Statistics -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-info text-white">
+                            <h6 class="mb-0">
+                                <i class="fas fa-chart-bar me-2"></i>
+                                Section Information
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3 text-center">
+                                <div class="col-6">
+                                    <div class="h5 text-primary mb-1">{{ section.Section }}</div>
+                                    <small class="text-muted">Section Number</small>
+                                </div>
+                                <div class="col-6">
+                                    <div class="h5 text-success mb-1">IPC</div>
+                                    <small class="text-muted">Legal Code</small>
+                                </div>
+                                <div class="col-12">
+                                    <div class="h6 text-info mb-1">{{ section.Chapter.split(' - ')[0] if ' - ' in section.Chapter else 'Chapter' }}</div>
+                                    <small class="text-muted">Chapter Reference</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Legal Notice -->
+                    <div class="card border-warning">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0 me-3">
+                                    <i class="fas fa-exclamation-triangle text-warning"></i>
+                                </div>
+                                <div>
+                                    <h6 class="text-warning mb-2">Legal Disclaimer</h6>
+                                    <p class="small text-muted mb-0">
+                                        This information is provided for educational purposes only.
+                                        For legal advice, please consult with a qualified attorney.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Navigation -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <a href="{{ url_for('browse') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Browse
+                </a>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <div class="btn-group" role="group">
+                    <a href="{{ url_for('home') }}" class="btn btn-primary">
+                        <i class="fas fa-search me-1"></i>New Search
+                    </a>
+                    <a href="{{ url_for('about') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-info-circle me-1"></i>About
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

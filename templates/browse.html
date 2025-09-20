@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block title %}Browse Sections - IPC Recommender System{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="bg-light py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-2">
+                        <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active">Browse Sections</li>
+                    </ol>
+                </nav>
+                <h1 class="h3 mb-0">
+                    <i class="fas fa-book text-primary me-2"></i>
+                    Browse IPC Sections
+                </h1>
+                <p class="text-muted mb-0 mt-2">Explore all Indian Penal Code sections organized by chapters</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{{ url_for('home') }}" class="btn btn-primary">
+                    <i class="fas fa-search me-2"></i>AI Search
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Search and Filter -->
+<section class="py-4 bg-white border-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card border-0 bg-light">
+                    <div class="card-body">
+                        <form id="filterForm">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-filter"></i>
+                                        </span>
+                                        <input type="text" class="form-control" id="sectionFilter" placeholder="Filter by section number, offense, or description...">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-select" id="chapterFilter">
+                                        <option value="">All Chapters</option>
+                                        {% set unique_chapters = chapters.keys() | sort %}
+                                        {% for chapter in unique_chapters %}
+                                        <option value="{{ chapter }}">{{ chapter }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-outline-secondary" id="clearFilters">
+                                        <i class="fas fa-times"></i> Clear
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="text-lg-end">
+                    <div class="bg-primary bg-opacity-10 rounded p-3">
+                        <h6 class="text-primary mb-1">
+                            <i class="fas fa-chart-bar me-1"></i>Total Sections
+                        </h6>
+                        <div class="h4 text-primary mb-0" id="sectionCount">
+                            {% set total_sections = [] %}
+                            {% for chapter_sections in chapters.values() %}
+                                {% set _ = total_sections.extend(chapter_sections) %}
+                            {% endfor %}
+                            {{ total_sections|length }}
+                        </div>
+                        <small class="text-muted">Available</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sections Content -->
+<section class="py-5">
+    <div class="container">
+        {% for chapter, sections in chapters.items() %}
+        <div class="chapter-section mb-5" data-chapter="{{ chapter }}">
+            <div class="row mb-4">
+                <div class="col">
+                    <h2 class="h4 text-primary border-bottom border-primary pb-2">
+                        <i class="fas fa-book-open me-2"></i>
+                        {{ chapter }}
+                        <span class="badge bg-primary ms-2">{{ sections|length }} sections</span>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                {% for section in sections %}
+                <div class="col-lg-6 section-item"
+                     data-section="{{ section.Section }}"
+                     data-offense="{{ section.Offense|lower }}"
+                     data-description="{{ section.Description|lower }}"
+                     data-chapter="{{ chapter }}">
+                    <div class="card h-100 border-0 shadow-sm hover-shadow">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="section-badge bg-primary text-white text-center py-2 px-2 rounded">
+                                        <div class="small fw-bold">IPC</div>
+                                        <div class="h5 mb-0">{{ section.Section }}</div>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h5 class="card-title text-dark mb-3">
+                                        {{ section.Offense }}
+                                    </h5>
+                                    <p class="card-text text-muted mb-3 description-text">
+                                        {{ section.Description[:150] }}{% if section.Description|length > 150 %}...{% endif %}
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <a href="{{ url_for('section_detail', section_id=section.Section) }}"
+                                           class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-eye me-1"></i>View Details
+                                        </a>
+                                        <small class="text-muted">
+                                            <i class="fas fa-bookmark me-1"></i>Section {{ section.Section }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- No Results Message -->
+        <div id="noResults" class="text-center py-5" style="display: none;">
+            <div class="mb-4">
+                <i class="fas fa-search fa-4x text-muted"></i>
+            </div>
+            <h3 class="h4 text-muted mb-3">No Sections Found</h3>
+            <p class="text-muted mb-4">
+                No IPC sections match your current filter criteria. Try adjusting your search terms or clearing the filters.
+            </p>
+            <button class="btn btn-primary" id="clearFiltersBtn">
+                <i class="fas fa-times me-1"></i>Clear Filters
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Stats -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 col-6 mb-4">
+                <div class="card border-0 h-100">
+                    <div class="card-body">
+                        <div class="text-primary mb-2">
+                            <i class="fas fa-user-injured fa-2x"></i>
+                        </div>
+                        <h6 class="card-title">Human Body</h6>
+                        <p class="text-muted small mb-0">Sections 299-377</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="card border-0 h-100">
+                    <div class="card-body">
+                        <div class="text-success mb-2">
+                            <i class="fas fa-home fa-2x"></i>
+                        </div>
+                        <h6 class="card-title">Property</h6>
+                        <p class="text-muted small mb-0">Sections 378-462</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="card border-0 h-100">
+                    <div class="card-body">
+                        <div class="text-warning mb-2">
+                            <i class="fas fa-users fa-2x"></i>
+                        </div>
+                        <h6 class="card-title">Public Order</h6>
+                        <p class="text-muted small mb-0">Sections 141-171</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="card border-0 h-100">
+                    <div class="card-body">
+                        <div class="text-info mb-2">
+                            <i class="fas fa-certificate fa-2x"></i>
+                        </div>
+                        <h6 class="card-title">Documents</h6>
+                        <p class="text-muted small mb-0">Sections 463-489</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
