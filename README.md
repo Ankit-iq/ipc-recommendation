@@ -70,9 +70,10 @@ Preferred communication style: Simple, everyday language.
 
 Meet the team behind the IPC Recommender System:
 
-| Developer           | Role                 | Image                             |
-|---------------------|----------------------|-----------------------------------|
-| Ankit Kumar Bhuyan  | Full-Stack Developer | [Ankit](images/WhatsApp Image 2025-09-20 at 22.08.22_efd3e502.jpg)   |
-| Pranita Bisoyi      | Frontend Developer   | [Pranita](images/WhatsApp Image 2025-09-20 at 22.06.21_d0c12ac6.jpg) |
+| Developer           | Role                 | Image                                                                 |
+|---------------------|---------------------|----------------------------------------------------------------------|
+| Ankit Kumar Bhuyan  | Full-Stack Developer | ![Ankit](https://github.com/Ankit-iq/ipc-recommendation/raw/main/images/WhatsApp%20Image%202025-09-20%20at%2022.08.22_efd3e502.jpg) |
+| Pranita Bisoyi      | Frontend Developer   | ![Pranita](https://github.com/Ankit-iq/ipc-recommendation/raw/main/images/WhatsApp%20Image%202025-09-20%20at%2022.06.21_d0c12ac6.jpg) |
+
 
 > Images should be hosted online (GitHub, Imgur, or your server) and linked here.
