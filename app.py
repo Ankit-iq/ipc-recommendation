@@ -4,34 +4,46 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from sentence_transformers import SentenceTransformer
 import os
+import requests
 
+# ------------------- Environment Variables -------------------
+FLASK_ENV = os.environ.get("FLASK_ENV", "production")
+SESSION_SECRET = os.environ.get("SESSION_SECRET", "fallback_secret")
+MODEL_URL = os.environ.get("MODEL_URL", "https://huggingface.co/your_model_repo/resolve/main/ipc_recommender.pkl")
+MODEL_PATH = os.environ.get("MODEL_PATH", "ipc_recommender.pkl")
+
+# ------------------- Flask App -------------------
 app = Flask(__name__)
+app.secret_key = SESSION_SECRET
 
-# Path to local cache folder for BERT model
-MODEL_CACHE_DIR = "./bert_model_cache"
+# ------------------- Ensure Model Exists -------------------
+if not os.path.exists(MODEL_PATH):
+    print("Downloading model...")
+    r = requests.get(MODEL_URL, stream=True)
+    r.raise_for_status()
+    with open(MODEL_PATH, "wb") as f:
+        for chunk in r.iter_content(chunk_size=8192):
+            f.write(chunk)
+    print("Model downloaded successfully.")
 
-# Load precomputed data (ensure embedding dimension matches your model)
-with open("ipc_recommender.pkl", "rb") as f:
+# ------------------- Load Model -------------------
+with open(MODEL_PATH, "rb") as f:
     data = pickle.load(f)
 
 df = data['df']
-
-# Some rows may have missing embeddings; filter them
 df = df[df['embedding'].apply(lambda x: x is not None)]
 emb_matrix = np.vstack(df['embedding'].values)
 
 # Load sentence-transformer model
+MODEL_CACHE_DIR = "./bert_model_cache"
 model_name = "sentence-transformers/all-MiniLM-L6-v2"
 model = SentenceTransformer(model_name, cache_folder=MODEL_CACHE_DIR)
 
 # ------------------- Helper Functions -------------------
-
 def get_embedding(text):
-    """Return the embedding of the query text."""
     return model.encode(text)
 
 def recommend(query, top_n=5):
-    """Return top-N recommendations based on cosine similarity."""
     q_emb = get_embedding(query).reshape(1, -1)
     scores = cosine_similarity(q_emb, emb_matrix).flatten()
     top_idx = scores.argsort()[::-1][:top_n]
@@ -46,8 +58,7 @@ def recommend(query, top_n=5):
         })
     return results
 
-# ------------------- Flask Routes -------------------
-
+# ------------------- Routes -------------------
 @app.route("/", methods=["GET", "POST"])
 def home():
     recommendations = None
@@ -65,9 +76,8 @@ def about():
 def browse():
     chapters = {}
     for idx, row in df.iterrows():
-        chapter_name = row.get('Chapter', 'Unknown Chapter')  # Use .get to avoid KeyError
+        chapter_name = row.get('Chapter', 'Unknown Chapter')
         chapters.setdefault(chapter_name, []).append(row)
-        # Get unique chapters for dropdown
     unique_chapters = sorted(chapters.keys())
     return render_template("browse.html", chapters=chapters, unique_chapters=unique_chapters)
 
@@ -84,6 +94,6 @@ def section_detail(section_id):
     return render_template("section_detail.html", section=section, related=related)
 
 # ------------------- Run App -------------------
-
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=(FLASK_ENV == "development"))
