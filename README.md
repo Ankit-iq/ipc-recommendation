@@ -1,6 +1,6 @@
 # IPC Recommender System
 
-## WEBSITE Link:- https://ipc-recommender.onrender.com
+## WEBSITE Link:- https://ipc-recommendation.onrender.com
 
 ## Overview
 
